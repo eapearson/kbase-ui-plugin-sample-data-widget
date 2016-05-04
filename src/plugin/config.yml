@@ -1,0 +1,130 @@
+## Welcome Panel
+---
+package:
+    name: sample-data-widget
+    description: Data widget samples
+    author: Erik Pearson
+    date: May 4, 2016
+    version: 0.1.0
+source:
+    modules: []
+install:
+    widgets:
+        # PANELS
+        - 
+            module: plugins/sample-data-widget/modules/panel
+            id: sdw_panel
+            type: factory
+        # SIMPLE EXAMPLE WIDGETS
+        -
+            module: plugins/sample-data-widget/modules/widgets/dataWidget
+            id: sdw_dataWidget
+            type: factory
+        -
+            module: plugins/sample-data-widget/modules/widgets/factoryWidget
+            id: sdw_factoryWidget
+            type: factory
+        # DATA WIDGETS
+        -
+            module: plugins/sample-data-widget/modules/widgets/expression/expressionSeries
+            id: sdw_expressionSeries
+            type: factory
+        -
+            module: plugins/sample-data-widget/modules/widgets/contigSet/widget
+            id: sdw_contigSet
+            type: factory
+        -
+            module: plugins/sample-data-widget/modules/widgets/kbaseGenomeComparison
+            id: sdw_genomeComparison
+            type: kbwidget
+            
+    # Set up a route to install that widget in the main body view
+    routes:
+        -
+            path:
+                -
+                    sample-data-widget
+                -
+                    type: param
+                    name: workspaceId
+                -
+                    type: param
+                    name: objectId
+                -
+                    type: param
+                    name: objectVersion
+            widget: sdw_panel
+    # Set up a menu item to invoke the path above
+    menu:
+        -
+            name: sample-expressionseries
+            definition:
+                path: sample-data-widget/78/38/1
+                label: Sample - Expression Series
+                icon: smile-o
+        -
+            name: sample-contigset
+            definition:
+                # NB: this path only works in CI as long as this Narrative stays up.
+                path: sample-data-widget/544/5/1
+                label: Sample - ContigSet Series
+                icon: smile-o
+    type:
+         # EXPRESSION
+        -
+            type:
+                module: KBaseExpression
+                name: ExpressionSeries
+                version: any
+            icon:  
+                type: fontAwesome
+                classes: ['fa-tachometer']
+            viewers:
+                -
+                    title: Data View
+                    default: true
+                    widget:
+                        name: sdw_expressionSeries                        
+                    panel: false
+                    
+        # GENOMES
+        
+        -
+            type:
+                module: KBaseGenomes
+                name: ContigSet
+                version: any
+            icon: 
+                type: fontAwesome
+                classes: ['fa-align-justify']
+            viewers:
+                -
+                    title: Data View
+                    default: true
+                    widget: 
+                        name: sdw_contigSet
+                    panel: true  
+        - 
+            type:
+                module: GenomeComparison
+                name: ProteomeComparison
+                version: any
+            icon:   
+                type: fontAwesome
+                classes: ['fa-arrows-h']
+            viewers:
+                -
+                    title: Sample Data Widgets - Genome Comparison Viewer
+                    widget:
+                        name: sdw_genomeComparison
+                        config:
+                            jqueryName: GenomeComparisonWidget2
+                    panel: true
+                    default: true
+                    options:
+                        -
+                            from: workspaceId
+                            to: ws_name
+                        -
+                            from: objectId
+                            to: ws_id
