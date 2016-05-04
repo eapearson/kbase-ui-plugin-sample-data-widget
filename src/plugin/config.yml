@@ -26,10 +26,6 @@ install:
             type: factory
         # DATA WIDGETS
         -
-            module: plugins/sample-data-widget/modules/widgets/expression/expressionSeries
-            id: sdw_expressionSeries
-            type: factory
-        -
             module: plugins/sample-data-widget/modules/widgets/contigSet/widget
             id: sdw_contigSet
             type: factory
@@ -57,38 +53,13 @@ install:
     # Set up a menu item to invoke the path above
     menu:
         -
-            name: sample-expressionseries
-            definition:
-                path: sample-data-widget/78/38/1
-                label: Sample - Expression Series
-                icon: smile-o
-        -
             name: sample-contigset
             definition:
                 # NB: this path only works in CI as long as this Narrative stays up.
                 path: sample-data-widget/544/5/1
-                label: Sample - ContigSet Series
+                label: Sample - ContigSet
                 icon: smile-o
     type:
-         # EXPRESSION
-        -
-            type:
-                module: KBaseExpression
-                name: ExpressionSeries
-                version: any
-            icon:  
-                type: fontAwesome
-                classes: ['fa-tachometer']
-            viewers:
-                -
-                    title: Data View
-                    default: true
-                    widget:
-                        name: sdw_expressionSeries                        
-                    panel: false
-                    
-        # GENOMES
-        
         -
             type:
                 module: KBaseGenomes
