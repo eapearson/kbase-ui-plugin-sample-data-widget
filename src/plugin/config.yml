@@ -1,45 +1,42 @@
-## Welcome Panel
+## Ontology Widgets
 ---
 package:
-    name: sample-data-widget
+    name: ontology-widgets
     description: Data widget samples
     author: Erik Pearson
-    date: May 4, 2016
-    version: 0.1.0
 source:
     modules: []
 install:
     widgets:
         # PANELS
         - 
-            module: plugins/sample-data-widget/modules/panel
-            id: sdw_panel
+            module: dictionary-panel
+            id: ontology_dictionary_panel
             type: factory
-        # SIMPLE EXAMPLE WIDGETS
-        -
-            module: plugins/sample-data-widget/modules/widgets/dataWidget
-            id: sdw_dataWidget
-            type: factory
-        -
-            module: plugins/sample-data-widget/modules/widgets/factoryWidget
-            id: sdw_factoryWidget
-            type: factory
-        # DATA WIDGETS
-        -
-            module: plugins/sample-data-widget/modules/widgets/contigSet/widget
-            id: sdw_contigSet
+        - 
+            module: translation-panel
+            id: ontology_translation_panel
             type: factory
         -
-            module: plugins/sample-data-widget/modules/widgets/kbaseGenomeComparison
-            id: sdw_genomeComparison
+            module: widgets/kbaseOntologyDictionary
+            id: ontologyDictionary
             type: kbwidget
+            config:
+                jqueryName: kbaseOntologyDictionary
+        -
+            module: widgets/kbaseOntologyTranslation
+            id: ontologyTranslation
+            type: kbwidget
+            config:
+                jqueryName: kbaseOntologyTranslation
+        
             
     # Set up a route to install that widget in the main body view
     routes:
         -
             path:
                 -
-                    sample-data-widget
+                    ontology-dictionary
                 -
                     type: param
                     name: workspaceId
@@ -49,53 +46,65 @@ install:
                 -
                     type: param
                     name: objectVersion
-            widget: sdw_panel
+            widget: ontology_dictionary_panel
+        -
+            path:
+                -
+                    ontology-translation
+                -
+                    type: param
+                    name: workspaceId
+                -
+                    type: param
+                    name: objectId
+                -
+                    type: param
+                    name: objectVersion
+            widget: ontology_translation_panel
     # Set up a menu item to invoke the path above
     menu:
         -
-            name: sample-contigset
+            name: ontologyWidgetDictionary
             definition:
                 # NB: this path only works in CI as long as this Narrative stays up.
-                path: sample-data-widget/544/5/1
-                label: Sample - ContigSet
+                path: ontology-dictionary/6306/12/2
+                label: Sample - Ontology Dictionary
                 icon: smile-o
-    type:
+        -
+            name: ontologyWidgetTranslation
+            definition:
+                # NB: this path only works in CI as long as this Narrative stays up.
+                path: ontology-translation/6306/6/2
+                label: Sample - Ontology Translation
+                icon: smile-o
+    types:
         -
             type:
-                module: KBaseGenomes
-                name: ContigSet
+                module: KBaseOntology
+                name: OntologyDictionary
                 version: any
             icon: 
                 type: fontAwesome
-                classes: ['fa-align-justify']
+                classes: ['fa-file']
             viewers:
                 -
-                    title: Data View
+                    title: Data View - Ontology Dictionary
                     default: true
-                    widget: 
-                        name: sdw_contigSet
                     panel: true  
-        - 
+                    widget: 
+                        name: ontologyDictionary
+        -
             type:
-                module: GenomeComparison
-                name: ProteomeComparison
+                module: KBaseOntology
+                name: OntologyTranslation
                 version: any
-            icon:   
+            icon: 
                 type: fontAwesome
-                classes: ['fa-arrows-h']
+                classes: ['fa-file']
             viewers:
                 -
-                    title: Sample Data Widgets - Genome Comparison Viewer
-                    widget:
-                        name: sdw_genomeComparison
-                        config:
-                            jqueryName: GenomeComparisonWidget2
-                    panel: true
+                    title: Data View - Ontology Translation
                     default: true
-                    options:
-                        -
-                            from: workspaceId
-                            to: ws_name
-                        -
-                            from: objectId
-                            to: ws_id
+                    panel: true  
+                    widget: 
+                        name: ontologyTranslation

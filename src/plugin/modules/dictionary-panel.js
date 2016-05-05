@@ -6,40 +6,45 @@ define([
     'bootstrap'
 ], function (WidgetSet, html) {
     'use strict';
-    
+
     function factory(config) {
         var root, container, runtime = config.runtime,
             widgetSet = WidgetSet.make({runtime: runtime}),
             layout;
-        
+
         // Widget Implementation
-        
+
         function render() {
-            var div = html.tag('div'),
-                p = html.tag('p');
+            var t = html.tag,
+                h1 = t('h1'),
+                div = t('div'),
+                p = t('p');
             return div({class: 'container-fluid'}, [
-                p('Hi, I am still a panel, but becoming more sophisticated!'),
-                p('Below you can find the widgets'),
+                div({class: 'row'}, [
+                    div({class: 'col-md-12'}, [
+                        h1('Ontology Dictionary Demo Page'),
+                    ])
+                ]),
                 div({class: 'row'}, [
                     div({class: 'col-md-3'}, [
-                        div({id: widgetSet.addWidget('sdw_dataWidget')}),
-                        div({id: widgetSet.addWidget('sdw_factoryWidget')})
+                        p('This page demonstrates the ontology dictionary widget.'),
+                        p('It takes an object reference from the path components.')
                     ]),
-                    div({class: 'col-md-9', id: widgetSet.addWidget('sdw_contigSet')})                    
+                    div({class: 'col-md-9', id: widgetSet.addWidget('ontologyDictionary')})
                 ])
             ]);
         }
-        
+
         layout = render();
-        
-        
-        
+
+
+
         // Widget Interface
-        
+
         function init(config) {
             return widgetSet.init(config);
         }
-        
+
         function attach(node) {
             root = node;
             container = node.appendChild(document.createElement('div'));
@@ -65,7 +70,7 @@ define([
         function destroy() {
             return widgetSet.destroy();
         }
-        
+
         return Object.freeze({
             init: init,
             attach: attach,
@@ -76,7 +81,7 @@ define([
             destroy: destroy
         });
     }
-    
+
     return {
         make: function (config) {
             return factory(config);
