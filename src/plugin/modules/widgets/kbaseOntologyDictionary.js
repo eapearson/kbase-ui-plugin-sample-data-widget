@@ -5,8 +5,7 @@ define([
     'kb/service/client/workspace',
     'datatables_bootstrap',
     'kb/widget/legacy/authenticatedWidget',
-    'kb/widget/legacy/kbaseTable',
-    'kb_vis_forcedNetwork'
+    'kb/widget/legacy/kbaseTable'
 ], function ($, colorbrewer, Workspace) {
     'use strict';
 
@@ -244,6 +243,7 @@ define([
             return $.jqElem('a')
                 .append(term.id + (withName ? ' [' + term.name + ']' : ''))
                 .on('click', function (e) {
+                    e.preventDefault();
                     $self.appendTerm(term.id);
                 });
         },
@@ -421,10 +421,17 @@ define([
 
                     })
                     .catch(function (d) {
+                        console.error(d);
+                        var message;
+                        if (d.message) {
+                            message = d.message;
+                        } else if (d.error) {
+                            message = d.error.message;
+                        }
                         $self.$elem.empty();
                         $self.$elem
                             .addClass('alert alert-danger')
-                            .html("Could not load object : " + d.error.message);
+                            .html("Could not load object : " + message);
                     });
 
             } else {

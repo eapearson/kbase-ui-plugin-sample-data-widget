@@ -5,8 +5,7 @@ define([
     'kb/service/client/workspace',
     'datatables_bootstrap',
     'kb/widget/legacy/authenticatedWidget',
-    'kb/widget/legacy/kbaseTable',
-    'kb_vis_forcedNetwork'
+    'kb/widget/legacy/kbaseTable'
 ], function ($, colorbrewer, Workspace) {
     'use strict';
 
